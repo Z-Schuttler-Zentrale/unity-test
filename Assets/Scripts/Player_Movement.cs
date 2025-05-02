@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
@@ -23,7 +22,6 @@ public class Player_Movement : MonoBehaviour
     void Movement()
     {
         float t = ProjectileSimulation.s;
-        t = t * 5;
         float totalPoints = 0;
 
         totalPoints = lr.positionCount - 1;
@@ -51,9 +49,8 @@ public class Player_Movement : MonoBehaviour
         Vector3 direction = (p2 - p1).normalized;
         if (direction != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            Quaternion lookRotation = Quaternion.LookRotation(direction); //so eine kacke
+            transform.rotation = lookRotation * Quaternion.Euler(-90f, 0f, 0f);
         }
-
-
     }
 }

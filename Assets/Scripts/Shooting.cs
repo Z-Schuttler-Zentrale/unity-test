@@ -20,7 +20,6 @@ public class Shooting : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Instantiate(niger, wuerfel.transform.position, wuerfel.transform.rotation);
-            transform.rotation = lookRotation * Quaternion.Euler(-90f, 0f, 0f); //so eine kacke
         }
     }
 
