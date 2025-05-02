@@ -247,10 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444c6adf3d210c40a380e3817c77526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  v: 20
-  angXY: 45
-  angXZ: 0
-  m: 1
+  v: 100
+  angXY: 10
+  angXZ: 80
+  m: 10
   ag: 0.05
   degWind: 0
   vw: 0
