@@ -1,0 +1,58 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+MemoryCaptures/
+UserSettings/
+
+# Unity auto-generated files
+sysinfo.txt
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Crashlytics / Analytics
+.crashlytics/
+*.symbols.zip
+
+# Unity Cache
+*.stacktrace
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Exclude all *.meta files except under Assets
+!Assets/**/*.meta
+*.meta
+
+# Optional: exclude AddressableAsset cache
+Assets/AddressableAssetsData/*/*.bin*
+Assets/StreamingAssets/aa/
+
+# Exclude builds
+*.apk
+*.aab
+*.xcodeproj/
+*.xcworkspace/
+
+# Unity Collaborate
+.collabignore
