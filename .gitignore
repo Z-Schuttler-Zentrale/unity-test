@@ -40,10 +40,6 @@ Thumbs.db
 .idea/
 *.sln.iml
 
-# Exclude all *.meta files except under Assets
-!Assets/**/*.meta
-*.meta
-
 # Optional: exclude AddressableAsset cache
 Assets/AddressableAssetsData/*/*.bin*
 Assets/StreamingAssets/aa/
