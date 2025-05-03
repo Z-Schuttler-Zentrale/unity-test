@@ -59,7 +59,7 @@ public class ProjectileSimulation : MonoBehaviour
             pos += new Vector3(vx * dt, vy * dt, vz * dt);
             points.Add(pos);
 
-            if (!maxHeightRecorded && Mathf.Abs(vy) < dt * 3)
+            if (!maxHeightRecorded && Mathf.Abs(vy) < 0)
             {
                 maxHeight = pos.y;
                 Debug.Log($"Höchster Punkt: {maxHeight:F2} m");
@@ -84,7 +84,7 @@ public class ProjectileSimulation : MonoBehaviour
 
     float Luftwiderstand(float vrel, float flaeche, float masse)
     {
-        float f = 0.45f * flaeche * 1.225f * vrel * vrel / (2 * masse);
+        float f = 0.3f * flaeche * 1.225f * vrel * vrel / (2 * masse);
         return vrel > 0 ? f : -f;
     }
 }
