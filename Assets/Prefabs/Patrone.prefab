@@ -247,11 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f444c6adf3d210c40a380e3817c77526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  v: 100
-  angXY: 0.5
-  angXZ: 50
-  m: 0.0095
-  ag: 0.000058
+  v: 800
+  angXY: 0.1
+  angXZ: 0
+  m: 0.01
+  ag: 0.00005184
   degWind: 90
   vw: 0
   h: 1
