@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour
     public GameObject spawnPunkt;
     public FiringMode mode = FiringMode.SINGLE;
     public int burstAmount;
-    public float fireRate = 0.1f;
+    public float cadence = 700f;
 
     public enum FiringMode
     {
@@ -20,17 +20,20 @@ public class WeaponController : MonoBehaviour
 
     private float _timePassed;
     private bool _isBursting;
+    private float _fireRate;
 
     void Update()
     {
         _timePassed += Time.deltaTime;
+        _fireRate = 60f / cadence;
+        
         if (mode != FiringMode.SAFETY)
         {
             switch (mode)
             {
                 case FiringMode.AUTOMATIC:
                 {
-                    if (_timePassed >= fireRate && Input.GetButton("Fire1"))
+                    if (_timePassed >= _fireRate && Input.GetButton("Fire1"))
                     {
                         FireBullet();
                         _timePassed = 0;
@@ -82,7 +85,7 @@ public class WeaponController : MonoBehaviour
         for (int i = 0; i < burstAmount; i++)
         {
             FireBullet();
-            yield return new WaitForSeconds(fireRate);
+            yield return new WaitForSeconds(_fireRate);
         }
         _isBursting = false;
     }
