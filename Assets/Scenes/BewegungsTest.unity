@@ -995,9 +995,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0583231adccc49040b2904dcf688ce8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  v: 900
-  patrone: {fileID: 5095120304018563490, guid: e5107e957eeea49429c241cb4be31cb7, type: 3}
+  patrone: {fileID: 3796520515074596755, guid: 069b221190d80ee46a6b34251ba4e331, type: 3}
   spawnPunkt: {fileID: 80874168}
+  mode: 0
+  burstAmount: 3
+  fireRate: 0.1
 --- !u!4 &543450652774120361
 Transform:
   m_ObjectHideFlags: 0
@@ -1006,7 +1008,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149041226003}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0.9993284, z: 0, w: 0.036643762}
   m_LocalPosition: {x: 0.7549006, y: 0.33599997, z: 1.4378966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1022,7 +1024,7 @@ Transform:
   - {fileID: 1729776008481763612}
   - {fileID: 80874169}
   m_Father: {fileID: 1333837812}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 175.8, z: 0}
 --- !u!1 &832149485121531430
 GameObject:
   m_ObjectHideFlags: 0

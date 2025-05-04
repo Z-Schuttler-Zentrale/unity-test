@@ -1,18 +1,62 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
     public GameObject patrone;
     public GameObject spawnPunkt;
+    public FiringMode mode = FiringMode.SINGLE;
+    public int burstAmount;
+    public float fireRate = 0.1f;
 
-    // Update is called once per frame
+    public enum FiringMode
+    {
+        SINGLE,
+        BURST,
+        AUTOMATIC,
+        SAFETY
+    }
+
+    private float _timePassed;
+    private bool _isBursting;
+
     void Update()
     {
-        // ggf in methode auslagern
-        if (Input.GetButtonDown("Fire1"))
+        _timePassed += Time.deltaTime;
+        if (mode != FiringMode.SAFETY)
         {
-            FireBullet();
+            switch (mode)
+            {
+                case FiringMode.AUTOMATIC:
+                {
+                    if (_timePassed >= fireRate && Input.GetButton("Fire1"))
+                    {
+                        FireBullet();
+                        _timePassed = 0;
+                    }
+
+                    break;
+                }
+                case FiringMode.SINGLE:
+                {
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        FireBullet();
+                    }
+
+                    break;
+                }
+                case FiringMode.BURST:
+                {
+                    if (Input.GetButtonDown("Fire1") && !_isBursting)
+                    {
+                        StartCoroutine(BurstFire());
+                    }
+
+                    break;
+                }
+            }
         }
     }
 
@@ -30,5 +74,16 @@ public class WeaponController : MonoBehaviour
     {
         SetzeWinkel();
         Instantiate(patrone, spawnPunkt.transform.position, spawnPunkt.transform.rotation);
+    }
+
+    private IEnumerator BurstFire()
+    {
+        _isBursting = true;
+        for (int i = 0; i < burstAmount; i++)
+        {
+            FireBullet();
+            yield return new WaitForSeconds(fireRate);
+        }
+        _isBursting = false;
     }
 }
