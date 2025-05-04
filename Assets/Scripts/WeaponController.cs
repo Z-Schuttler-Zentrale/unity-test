@@ -27,39 +27,38 @@ public class WeaponController : MonoBehaviour
         _timePassed += Time.deltaTime;
         _fireRate = 60f / cadence;
         
-        if (mode != FiringMode.SAFETY)
+        switch (mode)
         {
-            switch (mode)
+            case FiringMode.AUTOMATIC:
             {
-                case FiringMode.AUTOMATIC:
+                if (_timePassed >= _fireRate && Input.GetButton("Fire1"))
                 {
-                    if (_timePassed >= _fireRate && Input.GetButton("Fire1"))
-                    {
-                        FireBullet();
-                        _timePassed = 0;
-                    }
-
-                    break;
+                    FireBullet();
+                    _timePassed = 0;
                 }
-                case FiringMode.SINGLE:
-                {
-                    if (Input.GetButtonDown("Fire1"))
-                    {
-                        FireBullet();
-                    }
-
-                    break;
-                }
-                case FiringMode.BURST:
-                {
-                    if (Input.GetButtonDown("Fire1") && !_isBursting)
-                    {
-                        StartCoroutine(BurstFire());
-                    }
-
-                    break;
-                }
+                break;
             }
+            case FiringMode.SINGLE:
+            {
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    FireBullet();
+                }
+                break;
+            }
+            case FiringMode.BURST:
+            {
+                if (Input.GetButtonDown("Fire1") && !_isBursting)
+                {
+                    StartCoroutine(BurstFire());
+                }
+                break;
+            }
+
+            case FiringMode.SAFETY:
+            {
+                break;
+            } 
         }
     }
 
