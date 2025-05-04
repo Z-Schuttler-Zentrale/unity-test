@@ -1,6 +1,8 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed = 5f;
@@ -9,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
+    
+    public List<GameObject> inventory = new List<GameObject>();
     
     private Vector3 velocity;
     private bool isGrounded;
@@ -40,4 +44,21 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Aufhebbar"))
+        {
+            int itemID = hit.gameObject.GetInstanceID();
+            bool alreadyAdded = inventory.Exists(item => item.GetInstanceID() == itemID);
+
+            if (!alreadyAdded)
+            {
+                inventory.Add(hit.gameObject);
+                hit.gameObject.SetActive(false);
+            }
+        }
+    }
+
+
 }
