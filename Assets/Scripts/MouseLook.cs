@@ -6,7 +6,6 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 500f;
     [SerializeField] private Transform playerBody;
     [SerializeField] private GameObject rightHand;
-    
     private float xRotation;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
