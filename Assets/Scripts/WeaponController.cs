@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -21,11 +21,23 @@ public class WeaponController : MonoBehaviour
     private float _timePassed;
     private bool _isBursting;
     private float _fireRate;
+    private Text fireRateDisplayText;
 
-    void Update()
+    private void Start()
+    {
+        GameObject obj = GameObject.Find("Canvas");
+        Canvas canvas = obj.GetComponent<Canvas>();
+        if (canvas != null)
+        {
+            fireRateDisplayText = canvas.GetComponentInChildren<Text>();
+        }
+    }
+
+    private void Update()
     {
         _timePassed += Time.deltaTime;
         _fireRate = 60f / cadence;
+        fireRateDisplayText.text = mode.ToString();
         
         switch (mode)
         {
@@ -60,9 +72,10 @@ public class WeaponController : MonoBehaviour
                 break;
             } 
         }
+        SwitchFireMode();
     }
 
-    void SetzeWinkel()
+    private void SetProjectileAngels()
     {
         float xy = transform.rotation.eulerAngles.x;
         float xz = -transform.rotation.eulerAngles.y - 90;
@@ -72,10 +85,27 @@ public class WeaponController : MonoBehaviour
         ProjectileSimulation.startPoint = spawnPunkt.transform.position;
     }
 
-    void FireBullet()
+    private void FireBullet()
     {
-        SetzeWinkel();
+        SetProjectileAngels();
         Instantiate(patrone, spawnPunkt.transform.position, spawnPunkt.transform.rotation);
+    }
+
+    private void SwitchFireMode()
+    {
+        if (!Input.GetKeyDown(KeyCode.V))
+        {
+            return;
+        }
+        
+        if ((int) mode >= 3)
+        {
+            mode = 0;
+        }
+        else
+        {
+            mode++;
+        }
     }
 
     private IEnumerator BurstFire()
