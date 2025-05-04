@@ -3,16 +3,18 @@ using System.Collections.Generic;
 
 public class ProjectileSimulation : MonoBehaviour
 {
-    public float v = 20f;             // Startgeschwindigkeit (m/s)
-    public float angXY = 45f;         // Vertikaler Winkel
-    public float angXZ = 0f;          // Horizontaler Winkel
+    public float v = 900f;             // Startgeschwindigkeit (m/s)
+    public static float angXY;         // Vertikaler Winkel
+    public static float angXZ;          // Horizontaler Winkel
     public float m = 1f;              // Masse (kg)
-    public float ag = 0.05f;          // Querschnittsfläche (m²)
+    public float ag = 0.05f;          // Querschnittsflï¿½che (mï¿½)
     public float degWind = 0f;        // Windrichtung (Grad)
     public float vw = 0f;             // Windgeschwindigkeit (m/s)
-    public float h = 1f;              // Starthöhe (m)
+    public float h = 0f;              // Starthï¿½he (m)
     public LineRenderer lineRenderer;
     public static float s;
+
+    public static Vector3 startPoint;
 
     void Start()
     {
@@ -33,7 +35,7 @@ public class ProjectileSimulation : MonoBehaviour
         float vz = vxz * Mathf.Sin(angRad);
 
         Vector3 velocity = new Vector3(vx, vy, vz);
-        Vector3 position = new Vector3(0f, h, 0f);
+        Vector3 position = startPoint;
 
         Vector3 wind = vw * new Vector3(Mathf.Cos(windRad), 0f, Mathf.Sin(windRad));
 
@@ -50,7 +52,7 @@ public class ProjectileSimulation : MonoBehaviour
             Vector3 aDrag = Luftwiderstand(vRel, ag, m);
             Vector3 a = aGravity + aDrag;
 
-            // RK4 Schritte für Position und Geschwindigkeit
+            // RK4 Schritte fï¿½r Position und Geschwindigkeit
             Vector3 k1v = a * dt;
             Vector3 k1p = velocity * dt;
 
@@ -96,7 +98,7 @@ public class ProjectileSimulation : MonoBehaviour
 
     Vector3 Luftwiderstand(Vector3 vRel, float flaeche, float masse)
     {
-        float cw = 0.3f; // für spitzes Projektil
+        float cw = 0.3f; // fï¿½r spitzes Projektil
         float luftdichte = 1.225f;
         float f = 0.5f * luftdichte * cw * flaeche * vRel.sqrMagnitude / masse;
         return -f * vRel.normalized;

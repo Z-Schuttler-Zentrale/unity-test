@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 
-public class Player_Movement : MonoBehaviour
+public class BulletMovement : MonoBehaviour
 {
-    public float v = 1f;
     public LineRenderer lr;
     public float dt = 0.01f;
     float timePassed = 0f;

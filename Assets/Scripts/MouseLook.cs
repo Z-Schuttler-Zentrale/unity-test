@@ -12,7 +12,6 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("Initial Rotation " + rightHand.transform.rotation);
     }
 
     // Update is called once per frame
@@ -34,6 +33,6 @@ public class MouseLook : MonoBehaviour
         
         playerBody.Rotate(Vector3.up * mouseX);
         
-        Debug.Log("X, Y, Z: " + weaponRotationDebug.x.ToString("F2") + ", " + weaponRotationDebug.y.ToString("F2") + ", " + weaponRotationDebug.z.ToString("F2"));
+        // Debug.Log("X, Y, Z: " + weaponRotationDebug.x.ToString("F2") + ", " + weaponRotationDebug.y.ToString("F2") + ", " + weaponRotationDebug.z.ToString("F2"));
     }
 }
