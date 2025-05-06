@@ -28,7 +28,7 @@ public class BulletMovement : MonoBehaviour
         Vector3 position = start;
 
         float g = 9.81f;
-        float dt = 0.01f;
+        float dt = 0.05f;
         float t = 0f;
         Vector3 wind = windSpeed * new Vector3(Mathf.Cos(windAngle * Mathf.Deg2Rad), 0, Mathf.Sin(windAngle * Mathf.Deg2Rad));
 
@@ -63,6 +63,7 @@ public class BulletMovement : MonoBehaviour
             if (position.y < 0f)
             {
                 flightTime = t;
+                Debug.Log(t);
                 break;
             }
 

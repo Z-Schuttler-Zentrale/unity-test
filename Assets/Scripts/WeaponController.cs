@@ -9,7 +9,6 @@ public class WeaponController : MonoBehaviour
     public FiringMode mode = FiringMode.SINGLE;
     public int burstAmount;
     public float cadence = 700f;
-    public float rm = 1f;
 
 
     public enum FiringMode
@@ -92,7 +91,7 @@ public class WeaponController : MonoBehaviour
 
     private float CalculateSpread()
     {
-        return 2f / Mathf.Max(1f + t_lastspread, 3.25f - schusszahl * 0.2f);
+        return 2f / Mathf.Max(1f + t_lastspread, 3.5f - schusszahl * 0.2f);
     }
     private Vector3 GenerateGaussianRecoil(float spread)
     

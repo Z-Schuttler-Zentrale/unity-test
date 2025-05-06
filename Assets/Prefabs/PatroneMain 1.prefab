@@ -210,6 +210,6 @@ MonoBehaviour:
   speed: 800
   mass: 0.005
   dragArea: 0.00004
-  windAngle: 0
-  windSpeed: 0
+  windAngle: 90
+  windSpeed: 100
   lr: {fileID: 6310983479628286619}
