@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1704146404357218496}
   - component: {fileID: 7529761198679994155}
   - component: {fileID: 6310983479628286619}
-  - component: {fileID: 3952695820226073696}
   - component: {fileID: 154591920971015365}
   m_Layer: 0
   m_Name: PatroneMain 1
@@ -144,8 +143,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.27404404
-        value: 0.047872543
+        time: 0.2970848
+        value: 0.22109032
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -196,25 +195,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &3952695820226073696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3796520515074596755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f444c6adf3d210c40a380e3817c77526, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  v: 900
-  m: 1
-  ag: 0.05
-  degWind: 90
-  vw: 10
-  h: 0
-  lineRenderer: {fileID: 6310983479628286619}
 --- !u!114 &154591920971015365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,5 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01be983f846bd794da8b2223db63bf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 800
+  mass: 0.005
+  dragArea: 0.00004
+  windAngle: 0
+  windSpeed: 0
   lr: {fileID: 6310983479628286619}
-  dt: 0.01
