@@ -5,7 +5,7 @@ public class BulletPool : MonoBehaviour
 {
     public static BulletPool Instance;
     public BulletMovement bulletPrefab;
-    public int poolSize = 20;
+    public int poolSize = 60;
 
     private Queue<BulletMovement> pool = new Queue<BulletMovement>();
 

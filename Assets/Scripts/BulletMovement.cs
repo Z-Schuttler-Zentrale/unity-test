@@ -11,7 +11,7 @@ public class BulletMovement : MonoBehaviour
     public float windSpeed = 0f;
 
     public LineRenderer lr;
-    private float timePassed = 0f;
+    private float timePassed;
     private float flightTime = 1f;
 
     void Start()
@@ -22,13 +22,14 @@ public class BulletMovement : MonoBehaviour
 
     public void Init(Vector3 start, Vector3 direction)
     {
+        timePassed = 0f;
         List<Vector3> points = new List<Vector3>();
         Vector3 velocity = direction.normalized * speed;
 
         Vector3 position = start;
 
         float g = 9.81f;
-        float dt = 0.5f;
+        float dt = 0.2f;
         float t = 0f;
         Vector3 wind = windSpeed * new Vector3(Mathf.Cos(windAngle * Mathf.Deg2Rad), 0, Mathf.Sin(windAngle * Mathf.Deg2Rad));
 
@@ -64,6 +65,7 @@ public class BulletMovement : MonoBehaviour
             {
                 flightTime = t;
                 Debug.Log(t);
+                t = 0f;
                 break;
             }
 
@@ -105,7 +107,6 @@ public class BulletMovement : MonoBehaviour
         }
         lr.positionCount = interpolated.Count;
         lr.SetPositions(interpolated.ToArray());
-        flightTime = t;
     }
     Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
     {
@@ -134,7 +135,7 @@ public class BulletMovement : MonoBehaviour
 
         if (progress >= 1f)
         {
-            BulletPool.Instance.ReturnBullet(this); // Zurück in den Pool
+            BulletPool.Instance.ReturnBullet(this); 
             return;
         }
 
