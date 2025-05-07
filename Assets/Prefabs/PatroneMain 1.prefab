@@ -207,9 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01be983f846bd794da8b2223db63bf4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 800
+  speed: 300
   mass: 0.005
   dragArea: 0.00004
   windAngle: 90
-  windSpeed: 100
+  windSpeed: 150
   lr: {fileID: 6310983479628286619}

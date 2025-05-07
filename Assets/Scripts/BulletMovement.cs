@@ -28,7 +28,7 @@ public class BulletMovement : MonoBehaviour
         Vector3 position = start;
 
         float g = 9.81f;
-        float dt = 0.05f;
+        float dt = 0.5f;
         float t = 0f;
         Vector3 wind = windSpeed * new Vector3(Mathf.Cos(windAngle * Mathf.Deg2Rad), 0, Mathf.Sin(windAngle * Mathf.Deg2Rad));
 
@@ -68,11 +68,53 @@ public class BulletMovement : MonoBehaviour
             }
 
             t += dt;
+            dt += 0.01f;
         }
+        List < Vector3 > interpolated = new List<Vector3>();
 
-        lr.positionCount = points.Count;
-        lr.SetPositions(points.ToArray());
-        flightTime = t; // Store for movement
+        if (points.Count >= 2)
+        {
+            // Spiegelung am Anfang
+            Vector3 preStart = points[0] + (points[0] - points[1]);
+
+            // Spiegelung am Ende
+            Vector3 postEnd = points[points.Count - 1] + (points[points.Count - 1] - points[points.Count - 2]);
+
+            // Neue Punktliste mit Padding
+            List<Vector3> padded = new List<Vector3>();
+            padded.Add(preStart);
+            padded.AddRange(points);
+            padded.Add(postEnd);
+
+            // Interpolation
+            for (int i = 1; i < padded.Count - 2; i++)
+            {
+                for (float ti = 0f; ti < 1f; ti += 0.2f)
+                {
+                    Vector3 p = CatmullRom(padded[i - 1], padded[i], padded[i + 1], padded[i + 2], ti);
+                    interpolated.Add(p);
+                }
+            }
+
+            // Optional: letzten echten Punkt hinzufügen
+            interpolated.Add(points[points.Count - 1]);
+        }
+        else
+        {
+            interpolated.AddRange(points); // Fallback
+        }
+        lr.positionCount = interpolated.Count;
+        lr.SetPositions(interpolated.ToArray());
+        flightTime = t;
+    }
+    Vector3 CatmullRom(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t)
+    {
+        return 0.5f * (
+            2f * p1 +
+            (-p0 + p2) * t +
+            (2f * p0 - 5f * p1 + 4f * p2 - p3) * t * t +
+            (-p0 + 3f * p1 - 3f * p2 + p3) * t * t * t
+        );
     }
 
     Vector3 ComputeDrag(Vector3 vRel)
