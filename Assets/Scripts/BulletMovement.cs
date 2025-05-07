@@ -134,7 +134,7 @@ public class BulletMovement : MonoBehaviour
 
         if (progress >= 1f)
         {
-            Destroy(gameObject);
+            BulletPool.Instance.ReturnBullet(this); // Zurück in den Pool
             return;
         }
 

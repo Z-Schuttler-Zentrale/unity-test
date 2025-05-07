@@ -120,8 +120,7 @@ public class WeaponController : MonoBehaviour
     {
         float spread = CalculateSpread();
         Vector3 direction = RecoilDirection(spread);
-        GameObject bullet = Instantiate(patrone);
-        BulletMovement bm = bullet.GetComponent<BulletMovement>();
+        BulletMovement bm = BulletPool.Instance.GetBullet();
         bm.Init(spawnPunkt.transform.position, -direction);
         t_lastspread = 0;
         schusszahl = Mathf.Min(schusszahl + 1, 10); // Maximalwert als Puffer
