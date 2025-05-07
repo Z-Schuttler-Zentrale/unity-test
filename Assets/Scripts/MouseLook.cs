@@ -24,14 +24,10 @@ public class MouseLook : MonoBehaviour
 
         Quaternion cameraRotation = Quaternion.Euler(xRotation, 0f, 0f);
         Quaternion weaponRotation = Quaternion.Euler(-xRotation, -180f, 0f);
-
-        Vector3 weaponRotationDebug = rightHand.transform.rotation.eulerAngles;
-
+        
         transform.localRotation = cameraRotation;
         rightHand.transform.localRotation = weaponRotation;
         
         playerBody.Rotate(Vector3.up * mouseX);
-        
-        // Debug.Log("X, Y, Z: " + weaponRotationDebug.x.ToString("F2") + ", " + weaponRotationDebug.y.ToString("F2") + ", " + weaponRotationDebug.z.ToString("F2"));
     }
 }

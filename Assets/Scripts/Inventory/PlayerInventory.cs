@@ -18,7 +18,7 @@ public class PlayerInventory : MonoBehaviour
             items.Add(new InventoryItem(itemData));
         }
 
-        Debug.Log($"Item hinzugefügt: {itemData.itemName}");
+        Debug.Log($"Item hinzugef?gt: {itemData.itemName}");
     }
 
     public void UseItem(int index)

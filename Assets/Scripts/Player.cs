@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -11,15 +12,44 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private Canvas inventoryCanvas;
     
     public List<GameObject> inventory = new List<GameObject>();
+    // TODO: rename?
+    public GameObject mainWeapon;
+    public GameObject secondaryWeapon;
+    public GameObject helmetSlot;
+    public GameObject chestSlot;
+    public GameObject pantSlot;
+    public GameObject bootSlot;
+    
+    private Text _mainText;
+    private Text _secondaryText;
+    private Text _helmetText;
+    private Text _chestText;
+    private Text _pantText;
+    private Text _bootsText;
+    private Text _inventoryListText;
     
     private Vector3 velocity;
     private bool isGrounded;
     private float currentSpeed;
-    
+
+    private void Start()
+    {
+        _mainText = inventoryCanvas.transform.Find("Main").GetComponent<Text>();
+        _secondaryText = inventoryCanvas.transform.Find("Secondary").GetComponent<Text>();
+        _helmetText = inventoryCanvas.transform.Find("Helmet").GetComponent<Text>();
+        _chestText = inventoryCanvas.transform.Find("Chest").GetComponent<Text>();
+        _pantText = inventoryCanvas.transform.Find("Pants").GetComponent<Text>();
+        _bootsText = inventoryCanvas.transform.Find("Boots").GetComponent<Text>();
+        _inventoryListText = inventoryCanvas.transform.Find("List").GetComponent<Text>();
+
+    }
+
     void Update()
     {
+        UpdateInventoryDisplay();
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Wenn auf dem boden
@@ -59,6 +89,23 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    private void UpdateInventoryDisplay()
+    {
+        _mainText.text = $"Main: {(mainWeapon != null ? mainWeapon.name : "")}";
+        _secondaryText.text = $"Secondary: {(secondaryWeapon != null ? secondaryWeapon.name : "")}";
+        _helmetText.text = $"Helmet: {(helmetSlot != null ? helmetSlot.name : "")}";
+        _chestText.text = $"Chest: {(chestSlot != null ? chestSlot.name : "")}";
+        _pantText.text = $"Pants: {(pantSlot != null ? pantSlot.name : "")}";
+        _bootsText.text = $"Boots: {(bootSlot != null ? bootSlot.name : "")}";
+
+        _inventoryListText.text = ""; // Clear the text first
+        foreach (GameObject go in inventory)
+        {
+            _inventoryListText.text += $"{go.name}\n";
+        }
+    }
+
 
 
 }

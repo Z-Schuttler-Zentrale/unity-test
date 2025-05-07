@@ -3,7 +3,7 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
     public int itemsToSpawn;
-    public Item item;
+    public GameObject item;
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class ItemSpawner : MonoBehaviour
             float x = Random.Range(-worldSize.x / 2, worldSize.x / 2);
             float z = Random.Range(-worldSize.z / 2, worldSize.z / 2);
 
-            Instantiate(item.prefab, new Vector3(x, transform.position.y, z), Quaternion.identity);
+            Instantiate(item, new Vector3(x, transform.position.y, z), Quaternion.identity);
         }
     }
 
