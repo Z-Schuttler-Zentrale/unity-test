@@ -65,9 +65,19 @@ public class BulletMovement : MonoBehaviour
             if (position.y < 0f)
             {
                 flightTime = t;
-                t = 0f;
+
+                if (flightTime < 0.2f)
+                {
+                    flightTime = 0.2f;
+                    points.Clear();
+                    for (int i = 0; i <= 10; i++)
+                    {
+                        points.Add(start + direction.normalized * speed * dt * i / 100);
+                    }
+                }
                 break;
             }
+
 
             t += dt;
             dt += 0.01f;
