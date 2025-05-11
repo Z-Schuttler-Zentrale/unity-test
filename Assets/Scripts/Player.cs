@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed = 5f;
@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Canvas inventoryCanvas;
     
     public List<GameObject> inventory = new List<GameObject>();
+
+    public float maxHp = 100f;
+    public float hp;
+    
     // TODO: rename?
     public GameObject mainWeapon;
     public GameObject secondaryWeapon;
@@ -34,6 +38,12 @@ public class Player : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private float currentSpeed;
+    private bool _isAlive = true;
+
+    private void Awake()
+    {
+        hp = maxHp;
+    }
 
     private void Start()
     {
@@ -44,7 +54,24 @@ public class Player : MonoBehaviour
         _pantText = inventoryCanvas.transform.Find("Pants").GetComponent<Text>();
         _bootsText = inventoryCanvas.transform.Find("Boots").GetComponent<Text>();
         _inventoryListText = inventoryCanvas.transform.Find("List").GetComponent<Text>();
-
+    }
+    
+    public void Damage(float amount)
+    {
+        if (!_isAlive)
+        {
+            Debug.Log("Player is already dead");
+            return;
+        }
+        if (amount >= hp)
+        {
+            Debug.Log("Eliminated");
+            hp = 0;
+            _isAlive = false;
+            return;
+        }
+        hp -= amount;
+        Debug.Log($"Damaged Player by {amount}");
     }
 
     void Update()
@@ -105,7 +132,4 @@ public class Player : MonoBehaviour
             _inventoryListText.text += $"{go.name}\n";
         }
     }
-
-
-
 }

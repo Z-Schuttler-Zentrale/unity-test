@@ -13,6 +13,7 @@ public class BulletMovement : MonoBehaviour
     public LineRenderer lr;
     private float timePassed;
     private float flightTime = 1f;
+    private float impactSpeed;
 
     void Start()
     {
@@ -64,7 +65,6 @@ public class BulletMovement : MonoBehaviour
             if (position.y < 0f)
             {
                 flightTime = t;
-                Debug.Log(t);
                 t = 0f;
                 break;
             }
@@ -72,7 +72,7 @@ public class BulletMovement : MonoBehaviour
             t += dt;
             dt += 0.01f;
         }
-        List < Vector3 > interpolated = new List<Vector3>();
+        List<Vector3> interpolated = new List<Vector3>();
 
         if (points.Count >= 2)
         {
@@ -98,7 +98,7 @@ public class BulletMovement : MonoBehaviour
                 }
             }
 
-            // Optional: letzten echten Punkt hinzufügen
+            // Optional: letzten echten Punkt hinzufï¿½gen
             interpolated.Add(points[points.Count - 1]);
         }
         else
@@ -126,6 +126,11 @@ public class BulletMovement : MonoBehaviour
         return -drag * vRel.normalized;
     }
 
+    void DeleteBullet()
+    {
+        BulletPool.Instance.ReturnBullet(this);
+    }
+
     void Update()
     {
         if (lr == null || lr.positionCount < 2) return;
@@ -135,7 +140,7 @@ public class BulletMovement : MonoBehaviour
 
         if (progress >= 1f)
         {
-            BulletPool.Instance.ReturnBullet(this); 
+            DeleteBullet(); 
             return;
         }
 
@@ -145,7 +150,38 @@ public class BulletMovement : MonoBehaviour
 
         Vector3 p1 = lr.GetPosition(index);
         Vector3 p2 = lr.GetPosition(index + 1);
-        transform.position = Vector3.Lerp(p1, p2, lerpT);
-        transform.forward = (p2 - p1).normalized;
+        
+        float segmentLength = Vector3.Distance(p1, p2);
+        
+        Vector3 origin = Vector3.Lerp(p1, p2, lerpT);
+        Vector3 direction = (p2 - p1).normalized;
+        
+        transform.position = origin;
+        transform.forward = direction;
+        
+        Debug.DrawRay(origin, direction * segmentLength, Color.green, 1f);
+        RaycastHit hit;
+        if (Physics.Raycast(origin, direction, out hit, segmentLength))
+        {
+            float segmentTime = flightTime / (lr.positionCount - 1);
+            float currentSpeed = segmentLength / segmentTime;
+            float damage = Mathf.Min(100, (currentSpeed / speed) * 1 * 100);
+            
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+            Debug.DrawRay(origin, direction * segmentLength, Color.red, 1f);
+            DeleteBullet();
+
+            Debug.Log($"Ray Hit: {hit.collider.name}"); 
+            Debug.Log($"Damage {damage}"); 
+            Debug.Log($"Current Speed at Impact: {currentSpeed} m/s");
+            
+            if (damageable == null)
+            {
+                return;
+            }
+
+            damageable.Damage(damage);
+        }
+
     }
 }
