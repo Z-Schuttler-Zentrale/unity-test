@@ -171,9 +171,9 @@ public class BulletMovement : MonoBehaviour
             Debug.DrawRay(origin, direction * segmentLength, Color.red, 1f);
             DeleteBullet();
 
-            Debug.Log($"Ray Hit: {hit.collider.name}"); 
-            Debug.Log($"Damage {damage}"); 
-            Debug.Log($"Current Speed at Impact: {currentSpeed} m/s");
+            // Debug.Log($"Ray Hit: {hit.collider.name}"); 
+            // Debug.Log($"Damage {damage}"); 
+            // Debug.Log($"Current Speed at Impact: {currentSpeed} m/s");
             
             if (damageable == null)
             {
@@ -182,6 +182,5 @@ public class BulletMovement : MonoBehaviour
 
             damageable.Damage(damage);
         }
-
     }
 }

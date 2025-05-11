@@ -83,8 +83,8 @@ public class ProjectileSimulation : MonoBehaviour
             if (position.y < 0)
             {
                 float range = new Vector2(position.x, position.z).magnitude;
-                Debug.Log($"Reichweite: {range:F2} m");
-                Debug.Log($"Flugzeit: {t:F2} s");
+                // Debug.Log($"Reichweite: {range:F2} m");
+                // Debug.Log($"Flugzeit: {t:F2} s");
                 s = t;
                 break;
             }

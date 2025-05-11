@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +12,9 @@ public class WeaponController : MonoBehaviour
     public FiringMode mode = FiringMode.SINGLE;
     public int burstAmount;
     public float cadence = 700f;
-
+    public Magazine loadedMagazine;
+    
+    private Player player;
 
     public enum FiringMode
     {
@@ -32,6 +37,7 @@ public class WeaponController : MonoBehaviour
         {
             fireRateDisplayText = canvas.GetComponentInChildren<Text>();
         }
+        player = transform.parent.gameObject.GetComponent<Player>();
     }
 
     private void Update()
@@ -44,6 +50,11 @@ public class WeaponController : MonoBehaviour
         if (t_lastspread > 1f && schusszahl > 0)
         {
             schusszahl = 0;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
         }
 
         switch (mode)
@@ -118,13 +129,34 @@ public class WeaponController : MonoBehaviour
     }
     private void FireBullet()
     {
+        if (loadedMagazine == null || loadedMagazine.size <= 0)
+        {
+            return;
+        } 
         float spread = CalculateSpread();
         Vector3 direction = RecoilDirection(spread);
         BulletMovement bm = BulletPool.Instance.GetBullet();
         bm.Init(spawnPunkt.transform.position, -direction);
         t_lastspread = 0;
         schusszahl = Mathf.Min(schusszahl + 1, 10); // Maximalwert als Puffer
+        loadedMagazine.size -= 1;
     }
+    private void Reload()
+    {
+        List<Item> inventoryList = player.inventory;
+
+        Magazine foundMagazine = inventoryList.Find(item => item is Magazine) as Magazine;
+
+        if (foundMagazine == null)
+        {
+            Debug.Log("Du hast keine Magazine im Inventar");
+            return;
+        }
+        
+        loadedMagazine = foundMagazine;
+        player.inventory.Remove(foundMagazine);
+    }
+
 
     private void SwitchFireMode()
     {

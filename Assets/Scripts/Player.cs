@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private Canvas inventoryCanvas;
     
-    public List<GameObject> inventory = new List<GameObject>();
+    public List<Item> inventory = new List<Item>();
 
     public float maxHp = 100f;
     public float hp;
@@ -54,6 +55,13 @@ public class Player : MonoBehaviour, IDamageable
         _pantText = inventoryCanvas.transform.Find("Pants").GetComponent<Text>();
         _bootsText = inventoryCanvas.transform.Find("Boots").GetComponent<Text>();
         _inventoryListText = inventoryCanvas.transform.Find("List").GetComponent<Text>();
+
+        
+        // zu testzwecken
+        for (int i = 0; i < 30; i++)
+        {
+            inventory.Add(new Magazine());
+        }
     }
     
     public void Damage(float amount)
@@ -111,7 +119,7 @@ public class Player : MonoBehaviour, IDamageable
 
             if (!alreadyAdded)
             {
-                inventory.Add(hit.gameObject);
+                inventory.Add(hit.gameObject.GetComponent<Item>());
                 hit.gameObject.SetActive(false);
             }
         }
@@ -127,9 +135,9 @@ public class Player : MonoBehaviour, IDamageable
         _bootsText.text = $"Boots: {(bootSlot != null ? bootSlot.name : "")}";
 
         _inventoryListText.text = ""; // Clear the text first
-        foreach (GameObject go in inventory)
+        foreach (Item item in inventory)
         {
-            _inventoryListText.text += $"{go.name}\n";
+            _inventoryListText.text += $"{item.name}\n";
         }
     }
 }
