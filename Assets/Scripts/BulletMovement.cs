@@ -70,10 +70,10 @@ public class BulletMovement : MonoBehaviour
                 {
                     flightTime = 0.2f;
                     points.Clear();
-                    for (int i = 0; i <= 10; i++)
-                    {
-                        points.Add(start + direction.normalized * speed * dt * i / 100);
-                    }
+                    points.Add(start);
+                    points.Add(start + direction.normalized * speed * dt/5);
+                    points.Add(start + direction.normalized * speed * dt);
+
                 }
                 break;
             }
@@ -184,11 +184,12 @@ public class BulletMovement : MonoBehaviour
             // Debug.Log($"Ray Hit: {hit.collider.name}"); 
             // Debug.Log($"Damage {damage}"); 
             // Debug.Log($"Current Speed at Impact: {currentSpeed} m/s");
-            
+            Debug.Log("hit");
             if (damageable == null)
             {
                 return;
             }
+            
 
             damageable.Damage(damage);
         }
